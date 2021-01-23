@@ -15,4 +15,9 @@ const options = {
     }),
   ],
   adapter: Adapters.Prisma.Adapter({ prisma }),
+  secret: process.env.NEXTAUTH_SECRET,
+  session: {
+    jwt: false,
+    updateAge: 60 * 60, // 1時間
+  },
 };

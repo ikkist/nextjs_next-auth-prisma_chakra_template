@@ -2,7 +2,7 @@ import { NextApiHandler } from "next";
 import NextAuth from "next-auth";
 import Providers from "next-auth/providers";
 import Adapters from "next-auth/adapters";
-import prisma from "../../../lib/prisma";
+import prisma, { User } from "../../../lib/prisma";
 
 const authHandler: NextApiHandler = (req, res) => NextAuth(req, res, options);
 export default authHandler;
@@ -16,8 +16,18 @@ const options = {
   ],
   adapter: Adapters.Prisma.Adapter({ prisma }),
   secret: process.env.NEXTAUTH_SECRET,
+  pages: {
+    newUser: "/register",
+  },
   session: {
     jwt: false,
     updateAge: 60 * 60, // 1時間
+  },
+  callbacks: {
+    session: async (session: any, user: User) => {
+      session.user.account = user.account;
+      session.user.id = user.id;
+      return Promise.resolve(session);
+    },
   },
 };

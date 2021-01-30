@@ -2,7 +2,7 @@ import { Layout } from "../components/Layout";
 
 export default function IndexPage() {
   return (
-    <Layout title="manerite">
+    <Layout title="sample">
       <p>hogehoge</p>
     </Layout>
   );
